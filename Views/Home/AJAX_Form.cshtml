@@ -1,0 +1,109 @@
+﻿@model MVC_AJAX_Form.Models.Users
+
+@{
+    ViewBag.Title = "AJAX_Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .overlay{
+        position: absolute;
+        top: 0;
+        left:0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 99999;
+        background-color: #686868;
+        display: none;
+    }
+
+    .overlayText{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ffffff;
+    }
+</style>
+
+
+<h2>AJAX_Form</h2>
+
+<div class="container py-5">
+
+    <div class="overlay">
+        <h1 class="overlayText">Loading...</h1>
+    </div>
+
+    <div class="row my-5">
+        <div class="col-md-6">
+            @using (Ajax.BeginForm("Form1", "Home", new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "onSuccess",
+                LoadingElementId = "onProgress"
+            }))
+            {
+                <h5 class="text-center">Form 1</h5>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.form1.UserName1)
+                    @Html.TextBoxFor(m => m.form1.UserName1, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.form1.UserName1, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.form1.UserMobile1)
+                    @Html.TextBoxFor(m => m.form1.UserMobile1, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.form1.UserMobile1, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.form1.UserEmail1)
+                    @Html.TextBoxFor(m => m.form1.UserEmail1, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.form1.UserEmail1, "", new { @class = "text-danger" })
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            }
+        </div>
+
+        <div class="col-md-6">
+            @using (Ajax.BeginForm("Form2", "Home", new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "onSuccess",
+                LoadingElementId = "onProgress"
+            }))
+            {
+                <h5 class="text-center">Form 2</h5>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.form2.UserName2)
+                    @Html.TextBoxFor(m => m.form2.UserName2, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.form2.UserName2, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.form2.UserMobile2)
+                    @Html.TextBoxFor(m => m.form2.UserMobile2, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.form2.UserMobile2, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.form2.UserEmail2)
+                    @Html.TextBoxFor(m => m.form2.UserEmail2, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.form2.UserEmail2, "", new { @class = "text-danger" })
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function onProgress() {
+        console.log("Progress...");
+        $('.overlay').css("display", "block");
+    }
+    function onSuccess(response) {
+        console.log("Success...");
+        $('.overlay').css("display", "none");
+        var msg = "ID :" + response.UserID1;
+        alert(msg);
+    }
+</script>
